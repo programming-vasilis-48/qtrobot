@@ -11,17 +11,29 @@ cd ~/catkin_ws/src/vasilis/qtrobot
 git pull
 ```
 
-2. Replace the face detector and feature extractor nodes with the fixed versions:
+2. Replace the face detector and feature extractor nodes with the real face detection versions:
 
 ```bash
 cd ~/catkin_ws/src/vasilis/qtrobot/src/qt_confusion_detection/src
-mv face_detector_node_no_simulation.py face_detector_node.py
+mv face_detector_node_real.py face_detector_node.py
 mv feature_extractor_node_fixed.py feature_extractor_node.py
 chmod +x face_detector_node.py
 chmod +x feature_extractor_node.py
 chmod +x confusion_classifier_node.py
 cd ~/catkin_ws/src/vasilis/qtrobot/src/qt_repair_policy/src
 chmod +x policy_engine_node.py
+```
+
+Make sure the Haar cascade file exists in the data directory:
+```bash
+cd ~/catkin_ws/src/vasilis/qtrobot/src/qt_confusion_detection/src
+ls -l data/haarcascade_frontalface_default.xml
+```
+
+If the file doesn't exist, download it:
+```bash
+mkdir -p data
+wget -O data/haarcascade_frontalface_default.xml https://raw.githubusercontent.com/opencv/opencv/master/data/haarcascades/haarcascade_frontalface_default.xml
 ```
 
 3. Build the packages:
