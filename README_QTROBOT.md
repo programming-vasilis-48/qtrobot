@@ -15,7 +15,7 @@ git pull
 
 ```bash
 cd ~/catkin_ws/src/vasilis/qtrobot/src/qt_confusion_detection/src
-mv face_detector_node_fixed.py face_detector_node.py
+mv face_detector_node_no_simulation.py face_detector_node.py
 mv feature_extractor_node_fixed.py feature_extractor_node.py
 chmod +x face_detector_node.py
 chmod +x feature_extractor_node.py
@@ -43,6 +43,12 @@ To start the confusion detection system, use the full path to the launch file:
 
 ```bash
 roslaunch ~/catkin_ws/src/vasilis/qtrobot/launch/confusion_detection.launch
+```
+
+By default, confusion simulation is disabled. If you want to enable it (for testing purposes), use:
+
+```bash
+roslaunch ~/catkin_ws/src/vasilis/qtrobot/launch/confusion_detection.launch simulate_confusion:=true
 ```
 
 ## Troubleshooting

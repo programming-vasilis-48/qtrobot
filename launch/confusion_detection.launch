@@ -6,12 +6,14 @@
   <arg name="min_confidence" default="0.7" />
   <arg name="max_repair_attempts" default="3" />
   <arg name="repair_cooldown" default="5.0" />
+  <arg name="simulate_confusion" default="false" />
 
   <!-- Face Detector Node -->
   <node name="face_detector_node" pkg="qt_confusion_detection" type="face_detector_node.py" output="screen">
     <param name="camera_topic" value="$(arg camera_topic)" />
     <param name="detection_frequency" value="10" />
     <param name="face_detection_threshold" value="0.7" />
+    <param name="simulate_confusion" value="$(arg simulate_confusion)" />
   </node>
 
   <!-- Feature Extractor Node -->
