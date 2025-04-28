@@ -4,22 +4,23 @@ This guide provides step-by-step instructions for installing and running the con
 
 ## Installation
 
-1. Clone the repository into your catkin workspace:
+1. Pull the latest changes from the repository:
 
 ```bash
-cd ~/catkin_ws/src
-git clone https://github.com/yourusername/qt_confusion_detection.git
+cd ~/catkin_ws/src/vasilis/qtrobot
+git pull
 ```
 
-2. Replace the face detector node with the fixed version:
+2. Replace the face detector and feature extractor nodes with the fixed versions:
 
 ```bash
-cd ~/catkin_ws/src/qt_confusion_detection/src/qt_confusion_detection/src
+cd ~/catkin_ws/src/vasilis/qtrobot/src/qt_confusion_detection/src
 mv face_detector_node_fixed.py face_detector_node.py
+mv feature_extractor_node_fixed.py feature_extractor_node.py
 chmod +x face_detector_node.py
 chmod +x feature_extractor_node.py
 chmod +x confusion_classifier_node.py
-cd ~/catkin_ws/src/qt_confusion_detection/src/qt_repair_policy/src
+cd ~/catkin_ws/src/vasilis/qtrobot/src/qt_repair_policy/src
 chmod +x policy_engine_node.py
 ```
 
@@ -38,47 +39,40 @@ source ~/catkin_ws/devel/setup.bash
 
 ## Running the System
 
-To start the confusion detection system:
+To start the confusion detection system, use the full path to the launch file:
 
 ```bash
-roslaunch qt_confusion_detection confusion_detection.launch
-```
-
-If you encounter an error finding the launch file, you can use the full path:
-
-```bash
-roslaunch ~/catkin_ws/src/qt_confusion_detection/launch/confusion_detection.launch
+roslaunch ~/catkin_ws/src/vasilis/qtrobot/launch/confusion_detection.launch
 ```
 
 ## Troubleshooting
 
-### Launch File Not Found
+### Common Errors
+
+#### Launch File Not Found
 
 If you get an error like:
 ```
-RLException: [confusion_detection.launch] is neither a launch file in package [qt_confusion_detection] nor is [qt_confusion_detection] a launch file name
+RLException: [confusion_detection.launch] is neither a launch file in package [qtrobot] nor is [qtrobot] a launch file name
 ```
 
-Try these solutions:
-
-1. Make sure you've sourced your workspace:
+Always use the full path to the launch file:
 ```bash
-source ~/catkin_ws/devel/setup.bash
+roslaunch ~/catkin_ws/src/vasilis/qtrobot/launch/confusion_detection.launch
 ```
 
-2. Use the full path to the launch file:
-```bash
-roslaunch ~/catkin_ws/src/qt_confusion_detection/launch/confusion_detection.launch
-```
-
-3. Check if the package is properly installed:
-```bash
-rospack find qt_confusion_detection
-```
-
-### Face Detector Errors
+#### Face Detector Errors
 
 If you see errors related to the face detector, make sure you've replaced the original face detector with the fixed version as described in the installation steps.
+
+#### Feature Extractor Errors
+
+If you see errors like:
+```
+Error processing features: 'tuple' object does not support item assignment
+```
+
+Make sure you've replaced the feature extractor with the fixed version as described in the installation steps.
 
 ## System Overview
 
@@ -95,7 +89,7 @@ The system publishes and subscribes to the following topics:
 
 - **Input**:
   - `/camera/color/image_raw` (sensor_msgs/Image): Camera feed from QTrobot
-  
+
 - **Output**:
   - `/robot/speech/say` (std_msgs/String): Text for the robot to speak
   - `/robot/behavior/trigger` (std_msgs/String): Behavior triggers for the robot
